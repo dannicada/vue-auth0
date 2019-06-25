@@ -45,6 +45,16 @@ export default new Vuex.Store({
           console.log(err);
         }
       })
-    }
+    },
+  auth0logout (context) {
+    //No need to update the bearer in global axiosConfig to null because i am reflecting out 
+    // Clear Acess token and ID Token from local storage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+
+    // redirect to auth0 logout to completely log the user out 
+    window.location.href = process.env.VUE_APP_AUTH0_CONFIG_DOMAINURL + "/v2/logout?returnTo=" + process.env.VUE_APP_DOMAINURL + "/login&client_id=" + process.env.VUE_APP_AUTH0_CONFIG_CLIENTID;
+  },
   }
 })
